@@ -1,7 +1,16 @@
+'use strict';
+
+
 const express = require('express');
 const app = express();
 
 app.use(express.static(__dirname + '/dist/'));
 
 
-app.listen(process.env.PORT || 9090);
+const PORT = process.env.PORT || 9090;
+  
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctrl+C to quit.');
+});
+
