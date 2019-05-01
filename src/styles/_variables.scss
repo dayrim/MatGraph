@@ -1,0 +1,43 @@
+
+
+$fonts-path: '../fonts/';
+$default-font: 'Fira Sans', 'Arial', sans-serif;
+$secondary-font: 'Libre Baskerville', serif;
+
+$break-desktop-wide: 1400px;
+$break-desktop-narrow: 1144px;
+$break-small-height: 800px;
+$break-tablet: 980px;
+$break-mobile: 768px;
+
+@mixin respond-to($media) {
+
+    @if $media == 'wide' {
+        @media only screen and (min-width: $break-desktop-wide) { @content; }
+    }
+
+    @else if $media == 'narrow' {
+        @media only screen and (max-width: $break-desktop-narrow) { @content; }
+    }
+
+    @else if $media == 'small-height' {
+        @media only screen and (max-height: $break-small-height) { @content; }
+    }
+
+    @else if $media == 'mobile-devices' {
+        @media only screen and (max-width: $break-tablet - 1) { @content; }
+    }
+
+    @else if $media == 'tablet' {
+        @media only screen and (max-width: $break-tablet - 1) { @content; }
+    }
+
+    @else if $media == 'tablet-vertical' {
+        @media only screen and (max-width: 900px) { @content; }
+    }
+
+    @else if $media == 'mobile' {
+        @media only screen and (max-width: $break-mobile - 1) { @content; }
+    }
+
+}

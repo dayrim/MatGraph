@@ -1,0 +1,13 @@
+
+
+@import 'variables';
+@import 'fonts';
+
+
+
+body{
+    h1{
+        font-size: 4em;
+        font-family: $default-font;
+    }
+}

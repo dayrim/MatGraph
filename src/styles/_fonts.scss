@@ -1,0 +1,39 @@
+// Commonly used weight names:
+// 100 - Thin
+// 200 - Extra Light (Ultra Light)
+// 300 - Light
+// 400 - Normal (Regular)
+// 500 - Medium
+// 600 - Semi Bold (Demi Bold)
+// 700 - Bold
+// 800 - Extra Bold (Ultra Bold)
+// 900 - Black (Heavy)
+
+$fonts: (
+	'Fira Sans': (
+		('firasans-light', 300, normal),
+		('firasans-regular', 400, normal),
+		('firasans-medium', 500, normal),
+		('firasans-bold', 700, normal)
+	)
+);
+@mixin font-face($font-name, $font-path, $font-weight: normal, $font-style: normal) { 
+	@font-face {
+		font-family: '#{$font-name}';
+		src:url('#{$font-path}.woff2') format('woff2'),
+			url('#{$font-path}.woff') format('woff');
+		font-weight: $font-weight;
+		font-style: $font-style;
+	}
+}
+
+@each $font-name, $font-variations in $fonts {
+	@if type-of(nth($font-variations, 1)) == list { // Workaround for font families with only one font variation (use @debug($font-variations) to understand)
+		@each $font-properties in $font-variations {
+			@include font-face($font-name, #{$fonts-path}#{nth($font-properties, 1)}, nth($font-properties, 2), nth($font-properties, 3));
+		}
+	} @else {
+		@include font-face($font-name, #{$fonts-path}#{nth($font-variations, 1)}, nth($font-variations, 2), nth($font-variations, 3));
+	}
+}
+
