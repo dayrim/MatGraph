@@ -37,6 +37,10 @@ export default {
         ]
         },
         {
+          test: /\.json$/,
+          use: ['json-loader']
+        },
+        {
             test: /\.(ttf|eot|woff|woff2)$/,
             use: {
               loader: 'file-loader',
