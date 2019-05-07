@@ -4,6 +4,7 @@
 const express = require('express');
 const api = express();
 const request = require('request');
+const functions = require('firebase-functions');
 
 api.use(express.static(__dirname + '/dist/'));
 
