@@ -1,13 +1,4 @@
 const functions = require('firebase-functions');
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-
 const express = require('express');
 const api = express();
 const request = require('request');
@@ -23,19 +14,19 @@ const PORT = process.env.PORT || 9090;
 
 // });
 api.get('/', (req, res) => {
-    console.log("/")
-    request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
-  console.log('body:', body); 
-});
   res.send(process.env.NODE_ENV);
+  res.send("Referring to /");
+    request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
+        res.send(body);
+    });
 });
 
 api.get('/api', (req, res) => {
-    console.log("/api")
-    request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
-  console.log('body:', body); 
-});
     res.send(process.env.NODE_ENV);
+    res.send("Referring to /api");
+    request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
+        res.send(body);
+    });
   });
   
 
