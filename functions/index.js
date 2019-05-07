@@ -23,17 +23,23 @@ const PORT = process.env.PORT || 9090;
 
 // });
 api.get('/', (req, res) => {
+    console.log("/")
+    request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
+  console.log('body:', body); 
+});
   res.send(process.env.NODE_ENV);
 });
 
 api.get('/api', (req, res) => {
+    console.log("/api")
+    request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
+  console.log('body:', body); 
+});
     res.send(process.env.NODE_ENV);
   });
   
 
-request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
-  console.log('body:', body); 
-});
+
 
 api.listen(PORT, () => {
   console.log(`api listening on port ${PORT}`);
