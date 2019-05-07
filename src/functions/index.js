@@ -2,20 +2,21 @@
 
 
 const express = require('express');
-const app = express();
+const api = express();
 const request = require('request');
 
-app.use(express.static(__dirname + '/dist/'));
+api.use(express.static(__dirname + '/dist/'));
 
 
 
 
 const PORT = process.env.PORT || 9090;
   
-// app.route("/api/locations/*").get((req, res) => {
+// api.route("/api/locations/*").get((req, res) => {
 
 // });
-app.get('/', (req, res) => {
+api.get('/', (req, res) => {
+    console.log("get me ?")
   res.send(process.env.NODE_ENV);
 });
 
@@ -23,8 +24,9 @@ request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, respons
   console.log('body:', body); 
 });
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+api.listen(PORT, () => {
+  console.log(`api listening on port ${PORT}`);
   console.log('Press Ctrl+C to quit.');
 });
 
+exports.api = functions.https.onRequest(api);
