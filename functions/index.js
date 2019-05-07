@@ -40,4 +40,4 @@ api.listen(PORT, () => {
   console.log('Press Ctrl+C to quit.');
 });
 
-exports.api = functions.https.onRequest(api);
+exports.api = functions.region('europe-west1').https.onRequest(api);
