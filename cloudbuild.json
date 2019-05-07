@@ -19,8 +19,6 @@
           "deploy",
           "-P",
           "$PROJECT_ID",
-          "--only",
-          "hosting",
           "--token",
           "$_FIREBASE_DEPLOY_TOKEN"
         ]
