@@ -19,6 +19,10 @@ api.get('/', (req, res) => {
     console.log("get me ?")
   res.send(process.env.NODE_ENV);
 });
+api.get('/api', (req, res) => {
+    console.log("get me ?")
+  res.send(process.env.NODE_ENV);
+});
 
 request('http://andmebaas.stat.ee/sdmx-json/data/KK91', function (error, response, body) {
   console.log('body:', body); 

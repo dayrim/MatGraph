@@ -4,6 +4,7 @@ import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin'
 
 export default {
     entry: path.join(__dirname, 'src/index.js'),
@@ -65,6 +66,9 @@ export default {
             port: 9000
     },
     plugins: [
+        new CopyPlugin([
+          { from: 'src/functions/**', to: 'functions/',flatten:true, },
+        ]),
         new MiniCssExtractPlugin({
             filename: 'styles/[name].css',
             chunkFilename: '[id].css',
