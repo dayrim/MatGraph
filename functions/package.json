@@ -14,9 +14,5 @@
     "firebase-functions": "^2.3.0",
     "request": "^2.88.0"
   },
-  "private": true,
-  "engines": {
-    "node": "11.x",
-    "npm": "6.x"
-  }
+  "private": true
 }

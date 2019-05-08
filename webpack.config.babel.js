@@ -66,7 +66,7 @@ export default {
             port: 9000,
             before: function(app, server) {
               app.get('/api/*', function(req, res) {
-                res.redirect('http://localhost:9090/api/'+req.params[0]);
+                res.redirect('https://matgraph.firebaseapp.com/api/'+req.params[0]);
               });
             }
     },
