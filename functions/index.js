@@ -1,9 +1,9 @@
 const functions = require('firebase-functions');
 const express = require('express');
-const api = express();
+const app = express();
 const request = require('request');
 
-api.use(express.static(__dirname + '/dist/'));
+app.use(express.static(__dirname + '/dist/'));
 
 
 
@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 9090;
 
 //KK91
 
-api.get('api/stat-ee/:tableName', (req, res) => {
+app.get('/api/stat-ee/:tableName', (req, res) => {
     console.log(req.params)
     request('http://andmebaas.stat.ee/sdmx-json/data/'+req.params.tableName, function (error, response, body) {
         res.send(body);
@@ -48,9 +48,9 @@ api.get('api/stat-ee/:tableName', (req, res) => {
 //     });
 //   });
   
-api.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`NodeJS App listening on port ${PORT}`);
   console.log('Press Ctrl+C to quit.');
 });
 
-exports.api = functions.https.onRequest(api);
+exports.api = functions.https.onRequest(app);
