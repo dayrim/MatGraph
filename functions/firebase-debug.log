@@ -1,25 +1,25 @@
-[debug] [2019-05-08T09:22:58.904Z] ----------------------------------------------------------------------
-[debug] [2019-05-08T09:22:58.906Z] Command:       /Users/admin/.nvm/versions/node/v11.2.0/bin/node /Users/admin/.nvm/versions/node/v11.2.0/bin/firebase functions:shell
-[debug] [2019-05-08T09:22:58.907Z] CLI Version:   6.7.2
-[debug] [2019-05-08T09:22:58.907Z] Platform:      darwin
-[debug] [2019-05-08T09:22:58.907Z] Node Version:  v11.2.0
-[debug] [2019-05-08T09:22:58.908Z] Time:          Wed May 08 2019 12:22:58 GMT+0300 (Eastern European Summer Time)
-[debug] [2019-05-08T09:22:58.908Z] ----------------------------------------------------------------------
+[debug] [2019-05-08T15:13:40.860Z] ----------------------------------------------------------------------
+[debug] [2019-05-08T15:13:40.862Z] Command:       /Users/admin/.nvm/versions/node/v11.2.0/bin/node /Users/admin/.nvm/versions/node/v11.2.0/bin/firebase functions:shell
+[debug] [2019-05-08T15:13:40.862Z] CLI Version:   6.7.2
+[debug] [2019-05-08T15:13:40.862Z] Platform:      darwin
+[debug] [2019-05-08T15:13:40.862Z] Node Version:  v11.2.0
+[debug] [2019-05-08T15:13:40.864Z] Time:          Wed May 08 2019 18:13:40 GMT+0300 (Eastern European Summer Time)
+[debug] [2019-05-08T15:13:40.864Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-05-08T09:22:58.918Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-05-08T09:22:58.919Z] > authorizing via signed-in user
-[debug] [2019-05-08T09:22:58.919Z] [iam] checking project matgraph for permissions ["firebase.projects.get"]
-[debug] [2019-05-08T09:22:58.921Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/matgraph:testIamPermissions  
+[debug] [2019-05-08T15:13:40.875Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-05-08T15:13:40.876Z] > authorizing via signed-in user
+[debug] [2019-05-08T15:13:40.876Z] [iam] checking project matgraph for permissions ["firebase.projects.get"]
+[debug] [2019-05-08T15:13:40.878Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/matgraph:testIamPermissions  
 
-[debug] [2019-05-08T09:22:59.979Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-08T15:13:42.100Z] <<< HTTP RESPONSE 200
 [info] i  functions: Preparing to emulate functions.
-[debug] [2019-05-08T09:23:00.585Z] Fetching environment
-[debug] [2019-05-08T09:23:00.587Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/matgraph  
+[debug] [2019-05-08T15:13:42.909Z] Fetching environment
+[debug] [2019-05-08T15:13:42.911Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/matgraph  
  
-[debug] [2019-05-08T09:23:01.487Z] <<< HTTP RESPONSE 200
-[debug] [2019-05-08T09:23:01.488Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/507428284933:getServerAppConfig  
+[debug] [2019-05-08T15:13:43.818Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-08T15:13:43.819Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/507428284933:getServerAppConfig  
  
-[debug] [2019-05-08T09:23:01.715Z] <<< HTTP RESPONSE 200
-[debug] [2019-05-08T09:23:01.715Z] Starting @google-cloud/functions-emulator
-[debug] [2019-05-08T09:23:03.279Z] Parsing function triggers
+[debug] [2019-05-08T15:13:44.095Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-08T15:13:44.096Z] Starting @google-cloud/functions-emulator
+[debug] [2019-05-08T15:13:45.667Z] Parsing function triggers
 [info] ✔  functions: api
