@@ -13,8 +13,12 @@
     },
     "rewrites": [
       {
-        "source": "**",
+        "source": "/stat-ee{,/**}",
         "function": "api"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }
