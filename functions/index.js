@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 9090;
 
 //KK91
 
-api.get('/stat-ee/:tableName', (req, res) => {
+api.get('api/stat-ee/:tableName', (req, res) => {
     console.log(req.params)
     request('http://andmebaas.stat.ee/sdmx-json/data/'+req.params.tableName, function (error, response, body) {
         res.send(body);
