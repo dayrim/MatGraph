@@ -72,7 +72,7 @@ export default {
     },
     plugins: [
         new CopyPlugin([
-          { from: 'src/functions/**', to: 'functions/',flatten:true, },
+          { from: 'src/data.csv', to: '',flatten:true, },
         ]),
         new MiniCssExtractPlugin({
             filename: 'styles/[name].css',
