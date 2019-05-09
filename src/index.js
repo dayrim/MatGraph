@@ -162,14 +162,14 @@ import axios from 'axios'
 // let ultimateData = []
 
 //   function getDomesticExtraction() {
-//     return axios.get('/api/stat-ee/KK91')
+//     return axios.get('/api/stat-ee/table/KK91')
 //   }
   
 //   function getImports() {
-//     return axios.get('/api/stat-ee/KK956')
+//     return axios.get('/api/stat-ee/table/KK956')
 //   }
 //   function getExports() {
-//     return axios.get('/api/stat-ee/KK957')
+//     return axios.get('/api/stat-ee/table/KK957')
 //   }
 
 //   function processData(response,domestic){
@@ -418,14 +418,14 @@ class Exports {
 let ultimateData = []
 
   function getDomesticExtraction() {
-    return axios.get('/api/stat-ee/KK91')
+    return axios.get('/api/stat-ee/table/KK91')
   }
   
   function getImports() {
-    return axios.get('/api/stat-ee/KK956')
+    return axios.get('/api/stat-ee/table/KK956')
   }
   function getExports() {
-    return axios.get('/api/stat-ee/KK957')
+    return axios.get('/api/stat-ee/table/KK957')
   }
 
   function processData(response,domestic){
@@ -548,11 +548,15 @@ let ultimateData = []
             }
         })
         console.log(ultimateData[0])
-        var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height"),
-        innerRadius = 120,
-        outerRadius = height/2.6,
+        const width = 1200
+        const height = 1000
+
+        const svg = d3.select("svg")
+            .attr("width", width )
+            .attr("height", height )
+            
+        const innerRadius = 120
+        const outerRadius = height/2.6
         g = svg.append("g").attr("transform", "translate(+"+width/2+","+height/2+")");
         
         var x = d3.scaleBand()
