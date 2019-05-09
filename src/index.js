@@ -209,11 +209,16 @@ axios.all([getDomesticExtraction(), getImports(), getExports()])
                 }
             }
         })
-        console.log(ultimateData[0])
+        ultimateData= ultimateData.map(function(row){
+            return row.sort(function(a, b){return b.total - a.total});
+        })
+
         const width = 1200
         const height = 1000
         const innerRadius = 120
         const outerRadius = height/2.6
+        let data;
+        let arcsGlobal
 
         const svg = d3.select("svg")
             .attr("width", width )
@@ -231,35 +236,22 @@ axios.all([getDomesticExtraction(), getImports(), getExports()])
         var z = d3.scaleOrdinal()
         .range(["#98abc5", "#dd1658"]);
         
- 
-        let data=ultimateData[0]
-        data.sort(function(a, b){return b.total - a.total});
-        console.log(data)
+        arcsGlobal = globalGroup.append("g")
+        .attr("class","arcsGlobal") 
+       
+        // data.sort(function(a, b){return b.total - a.total});
+        // console.log(data)
         //weave(data, function(a, b) { return b[data.columns[3]] -  a[data.columns[3]]; });
-     
         updateGraph();
+        // d3.interval(function(){
+        //     updateGraph();
+        // },10000)
+      
 
-        globalGroup.append("g")
-        .selectAll("g")
-        .data(d3.stack().keys(data.columns.slice(1))(data))
-        .enter().append("g")
-          .attr("fill", function(d) { return z(d.key); })
- 
 
-        .selectAll("path")
-        .data(function(d) { console.log(d); return d; })
-        .enter().append("path")
-          .attr("class","arcs")  
-          .attr("d", d3.arc()
-              .innerRadius(function(d) { return y(d[0]); })
-              .outerRadius(function(d) { return y(d[1]); })
-              .startAngle(function(d) { return x(d.data.Material); })
-              .endAngle(function(d) { return x(d.data.Material) + x.bandwidth(); })
-              .padAngle(0.01)
-              .padRadius(innerRadius))
               
 
-        var label = globalGroup.append("g")
+        const label = globalGroup.append("g")
         .selectAll("g")
         .data(data)
         .enter().append("g")
@@ -272,23 +264,48 @@ axios.all([getDomesticExtraction(), getImports(), getExports()])
         
         label.append("text")
           .attr("transform", function(d) { return (x(d.Material) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(90)translate(0,16)" : "rotate(-90)translate(0,-9)"; })
+          .attr("class","arcLabel")
           .text(function(d) { return d.Material; });
         
-        var yAxis = globalGroup.append("g")
-          .attr("text-anchor", "end");
+        let yAxis = globalGroup.append("g")
+          .attr("text-anchor", "end")
+          .attr("class","volumeGroup")
         
-        var yTick = yAxis
+          console.log(y.ticks(5).slice(1))
+        // JOIN
+        let yTick = yAxis
         .selectAll("g")
         .data(y.ticks(5).slice(1))
-        .enter().append("g");
+
+        // // EXIT
+        // yTick.exit().remove()
+
+        // // UPDATE
+
+        // let tickUpdate = yTick.selectAll("g").attr("class","tickCircle update");
+
+        // tickUpdate.selectAll("circle")
+        // .attr("r", y);
+      
+        // tickUpdate.selectAll("text")
+        // .attr("y", function(d) { return -y(d); })
+        // .text(y.tickFormat(10, "s"));
+      
+        // tickUpdate.selectAll("text")
+        // .attr("y", function(d) { return -y(d); })
+        // .text(y.tickFormat(10, "s"));
+
+        // ENTER
+
+        let tickEnter = yTick.enter().append("g").attr("class","tickCircle enter");
         
-        yTick.append("circle")
+        tickEnter.append("circle")
           .attr("fill", "none")
           .attr("stroke", "#000")
           .attr("stroke-opacity", 0.5)
           .attr("r", y);
         
-        yTick.append("text")
+          tickEnter.append("text")
           .attr("x", -6)
           .attr("y", function(d) { return -y(d); })
           .attr("dy", "0.35em")
@@ -298,17 +315,17 @@ axios.all([getDomesticExtraction(), getImports(), getExports()])
           .attr("stroke-width", 3)
           .text(y.tickFormat(10, "s"));
         
-        yTick.append("text")
+          tickEnter.append("text")
           .attr("x", -6)
           .attr("y", function(d) { return -y(d); })
           .attr("dy", "0.35em")
           .text(y.tickFormat(10, "s"));
         
         yAxis.append("text")
-          .attr("x", -6)
-          .attr("y", function(d) { return -y(y.ticks(10).pop()); })
-          .attr("dy", "-1em")
-          .text("Units");
+        .attr("x", -6)
+        .attr("y", function(d) { return -y(y.ticks(10).pop()); })
+        .attr("dy", "-1em")
+        .text("Units");
         
         var legend = globalGroup.append("g")
         .selectAll("g")
@@ -328,9 +345,53 @@ axios.all([getDomesticExtraction(), getImports(), getExports()])
           .text(function(d) { return d; });
     
         function updateGraph(){
+            data=ultimateData[Math.floor(Math.random() * ultimateData.length)]
+
             x.domain(data.map(function(d) { return d.Material; }));
             y.domain([0, d3.max(data, function(d) { return d.total; })]);
             z.domain(data.columns.slice(1));
+
+            // JOIN
+            let arcGroup = arcsGlobal 
+                .selectAll("g")
+                .data(d3.stack().keys(data.columns.slice(1))(data))
+           // console.log(arcsGlobal)
+
+            // EXIT 
+
+            arcGroup.exit().remove()
+            // UPDATE 
+            arcGroup
+                .attr("class","arcGroup update") 
+                .attr("fill", function(d) { return z(d.key); })
+            .selectAll("path")
+                .attr("class","arc")  
+                .attr("d", d3.arc()
+                    .innerRadius(function(d) { return y(d[0]); })
+                    .outerRadius(function(d) { return y(d[1]); })
+                    .startAngle(function(d) { return x(d.data.Material); })
+                    .endAngle(function(d) { return x(d.data.Material) + x.bandwidth(); })
+                    .padAngle(0.01)
+                    .padRadius(innerRadius))
+
+            // ENTER
+            arcGroup.enter().append("g")
+                .attr("class","arcGroup enter") 
+                .attr("fill", function(d) { return z(d.key); })         
+            .selectAll("path")
+            .data(function(d) { return d; })
+            .enter().append("path")
+                .attr("class","arc")  
+                .attr("d", d3.arc()
+                    .innerRadius(function(d) { return y(d[0]); })
+                    .outerRadius(function(d) { return y(d[1]); })
+                    .startAngle(function(d) { return x(d.data.Material); })
+                    .endAngle(function(d) { return x(d.data.Material) + x.bandwidth(); })
+                    .padAngle(0.01)
+                    .padRadius(innerRadius))
+            
+    
+                  
         }
         // function weave(array, compare) {
         // var i = -1, j, n = array.sort(compare).length, weave = new Array(n);
