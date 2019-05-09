@@ -370,128 +370,7 @@ function scaleRadial() {
 
   return scale;
 }
-  var svg = d3.select("svg"),
-width = +svg.attr("width"),
-height = +svg.attr("height"),
-innerRadius = 180,
-outerRadius = height/2.1,
-g = svg.append("g").attr("transform", "translate(+"+width/2+","+height/2+")");
-
-var x = d3.scaleBand()
-.range([0, 2 * Math.PI])
-.align(0);
-
-var y = scaleRadial()
-.range([innerRadius, outerRadius]);
-
-var z = d3.scaleOrdinal()
-.range(["#98abc5", "#ff8c00"]);
-
-d3.csv("data.csv", function(d, i, columns) {
-    console.log(d,i,columns)
-   var t,i
-for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-d.total = t;
-return d;
-}).then( function( data) {
-console.log(data)
-weave(data, function(a, b) { return b[data.columns[6]] -  a[data.columns[6]]; });
-x.domain(data.map(function(d) { return d.State; }));
-y.domain([0, d3.max(data, function(d) { return d.total; })]);
-z.domain(data.columns.slice(1));
-
-g.append("g")
-.selectAll("g")
-.data(d3.stack().keys(data.columns.slice(1))(data))
-.enter().append("g")
-  .attr("fill", function(d) { return z(d.key); })
-.selectAll("path")
-.data(function(d) { return d; })
-.enter().append("path")
-  .attr("d", d3.arc()
-      .innerRadius(function(d) { return y(d[0]); })
-      .outerRadius(function(d) { return y(d[1]); })
-      .startAngle(function(d) { return x(d.data.State); })
-      .endAngle(function(d) { return x(d.data.State) + x.bandwidth(); })
-      .padAngle(0.01)
-      .padRadius(innerRadius));
-
-var label = g.append("g")
-.selectAll("g")
-.data(data)
-.enter().append("g")
-  .attr("text-anchor", "middle")
-  .attr("transform", function(d) { return "rotate(" + ((x(d.State) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + innerRadius + ",0)"; });
-
-label.append("line")
-  .attr("x2", -5)
-  .attr("stroke", "#000");
-
-label.append("text")
-  .attr("transform", function(d) { return (x(d.State) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(90)translate(0,16)" : "rotate(-90)translate(0,-9)"; })
-  .text(function(d) { return d.State; });
-
-var yAxis = g.append("g")
-  .attr("text-anchor", "end");
-
-var yTick = yAxis
-.selectAll("g")
-.data(y.ticks(10).slice(1))
-.enter().append("g");
-
-yTick.append("circle")
-  .attr("fill", "none")
-  .attr("stroke", "#000")
-  .attr("stroke-opacity", 0.5)
-  .attr("r", y);
-
-yTick.append("text")
-  .attr("x", -6)
-  .attr("y", function(d) { return -y(d); })
-  .attr("dy", "0.35em")
-  .attr("fill", "none")
-  .attr("stroke", "#fff")
-  .attr("stroke-linejoin", "round")
-  .attr("stroke-width", 3)
-  .text(y.tickFormat(10, "s"));
-
-yTick.append("text")
-  .attr("x", -6)
-  .attr("y", function(d) { return -y(d); })
-  .attr("dy", "0.35em")
-  .text(y.tickFormat(10, "s"));
-
-yAxis.append("text")
-  .attr("x", -6)
-  .attr("y", function(d) { return -y(y.ticks(10).pop()); })
-  .attr("dy", "-1em")
-  .text("Population");
-
-var legend = g.append("g")
-.selectAll("g")
-.data(data.columns.slice(1).reverse())
-.enter().append("g")
-  .attr("transform", function(d, i) { return "translate(-40," + (i - (data.columns.length - 1) / 2) * 20 + ")"; });
-
-legend.append("rect")
-  .attr("width", 18)
-  .attr("height", 18)
-  .attr("fill", z);
-
-legend.append("text")
-  .attr("x", 24)
-  .attr("y", 9)
-  .attr("dy", "0.35em")
-  .text(function(d) { return d; });
-});
-
-function weave(array, compare) {
-var i = -1, j, n = array.sort(compare).length, weave = new Array(n);
-while (++i < n) weave[i] = array[(j = i << 1) >= n ? (n - i << 1) - 1 : j];
-while (--n >= 0) array[n] = weave[n];
-}
-
-
+ 
 
 class DomesticExtraction {
     constructor(data, max,categories,timeline) {
@@ -554,21 +433,26 @@ let ultimateData = []
     const categories = [];
     const timeline = [];
 
-    if(domestic){
         response.data.structure.dimensions.series[0].values.forEach(function(category,index){
             if(!category.name.includes('..')){
-                if(category.name.includes('Biomass')){
-                    response.data.structure.dimensions.series[0].values[index].name='Biomass and biomass products'
+                if(category.name.includes('Biomass and biomass products')){
+                    response.data.structure.dimensions.series[0].values[index].name='Biomass'
                 }
-                else if(category.name.includes('Non metalic minerals')){
-                    response.data.structure.dimensions.series[0].values[index].name='Non-metallic minerals, raw and processed'
+                else if(category.name.includes('Non-metallic minerals, raw and processed')){
+                    response.data.structure.dimensions.series[0].values[index].name='Non metalic minerals'
                 }
-                else if(category.name.includes('Fossil fuels')){
-                    response.data.structure.dimensions.series[0].values[index].name='Fossil energy materials/carriers, raw and processed'
+                else if(category.name.includes('Fossil energy materials/carriers, raw and processed')){
+                    response.data.structure.dimensions.series[0].values[index].name='Fossil fuels'
                 }
+                else if(category.name.includes('Metal ores and concentrates, raw and processed')){
+                  response.data.structure.dimensions.series[0].values[index].name='Metal ores and concentrates'
+              }
+              else if(category.name.includes('Waste imported for final treatment and disposal')){
+                response.data.structure.dimensions.series[0].values[index].name='Waste'
+            }
             }
         })
-    }
+    
 
     response.data.structure.dimensions.series[0].values.forEach(function(category){
         categories.push(category.name)
@@ -628,30 +512,159 @@ let ultimateData = []
 
         const domesticUsage = new DomesticUsage(total, exportsObj.data, exportsObj.categories, exportsObj.timeline);
 
+        importsObj.timeline.forEach(function(timeStamp,timeIndex){
+          ultimateData[timeIndex]=[]
+          ultimateData[timeIndex].columns=["Material","Import","DomesticExtraction"]
+        })
+       importsObj.data.forEach(function(row,rowIndex){
+            if(!importsObj.categories[rowIndex].includes("..")&& !importsObj.categories[rowIndex].includes("Total")){
 
-        ultimateData = importsObj.data.map(function(row,rowIndex){
-            if(!importsObj.categories[rowIndex].includes("..")){
 
                 let domesticRowIndex = domesticExtraction.categories.indexOf(importsObj.categories[rowIndex])
                 // console.log(importsObj.categories[rowIndex])
                 // console.log(domesticRowIndex)
                 if(domesticRowIndex>0){
                     return row.map(function(value,valueIndex){
-                        return [value-domesticExtraction.data[domesticRowIndex][valueIndex],exportsObj.data[rowIndex][valueIndex]-domesticUsage.data[rowIndex][valueIndex]]
+                      ultimateData[valueIndex].push(
+                        {
+                          Material: importsObj.categories[rowIndex],
+                          Import: value,
+                          DomesticExtraction: domesticExtraction.data[domesticRowIndex][valueIndex],
+                          total: value+domesticExtraction.data[domesticRowIndex][valueIndex]
+                         })
                     })
                 }
                 else{
-                    return row.map(function(value,valueIndex){
-                        return [value,exportsObj.data[rowIndex][valueIndex]-domesticUsage.data[rowIndex][valueIndex]]
+                    return row.forEach(function(value,valueIndex){
+                       ultimateData[valueIndex].push(
+                         {
+                           Material: importsObj.categories[rowIndex],
+                           Import: value,
+                           DomesticExtraction: 0,
+                           total: value
+                          })
                     })
                 }
             }
-            else{
-                return row.map(function(value,valueIndex){
-                    return [value,exportsObj.data[rowIndex][valueIndex]-domesticUsage.data[rowIndex][valueIndex]]
-                })
-            }
         })
-        console.log(ultimateData)
+        console.log(ultimateData[0])
+        var svg = d3.select("svg"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height"),
+        innerRadius = 120,
+        outerRadius = height/2.6,
+        g = svg.append("g").attr("transform", "translate(+"+width/2+","+height/2+")");
+        
+        var x = d3.scaleBand()
+        .range([0, 2 * Math.PI])
+        .align(0);
+        
+        var y = scaleRadial()
+        .range([innerRadius, outerRadius]);
+        
+        var z = d3.scaleOrdinal()
+        .range(["#98abc5", "#dd1658"]);
+        
+ 
+        let data=ultimateData[0]
+        data.sort(function(a, b){return b.total - a.total});
+        console.log(data)
+        //weave(data, function(a, b) { return b[data.columns[3]] -  a[data.columns[3]]; });
      
+        x.domain(data.map(function(d) { return d.Material; }));
+        y.domain([0, d3.max(data, function(d) { return d.total; })]);
+        z.domain(data.columns.slice(1));
+        
+        g.append("g")
+        .selectAll("g")
+        .data(d3.stack().keys(data.columns.slice(1))(data))
+        .enter().append("g")
+          .attr("fill", function(d) { return z(d.key); })
+        .selectAll("path")
+        .data(function(d) { console.log(d); return d; })
+        .enter().append("path")
+          .attr("d", d3.arc()
+              .innerRadius(function(d) { return y(d[0]); })
+              .outerRadius(function(d) { return y(d[1]); })
+              .startAngle(function(d) { return x(d.data.Material); })
+              .endAngle(function(d) { return x(d.data.Material) + x.bandwidth(); })
+              .padAngle(0.01)
+              .padRadius(innerRadius));
+        
+        var label = g.append("g")
+        .selectAll("g")
+        .data(data)
+        .enter().append("g")
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) { return "rotate(" + ((x(d.Material) + x.bandwidth() / 2) * 180 / Math.PI - 90) + ")translate(" + (outerRadius + 40 )+ ",0)"; });
+        
+        label.append("line")
+          .attr("x2", -5)
+          .attr("stroke", "#000");
+        
+        label.append("text")
+          .attr("transform", function(d) { return (x(d.Material) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI ? "rotate(90)translate(0,16)" : "rotate(-90)translate(0,-9)"; })
+          .text(function(d) { return d.Material; });
+        
+        var yAxis = g.append("g")
+          .attr("text-anchor", "end");
+        
+        var yTick = yAxis
+        .selectAll("g")
+        .data(y.ticks(5).slice(1))
+        .enter().append("g");
+        
+        yTick.append("circle")
+          .attr("fill", "none")
+          .attr("stroke", "#000")
+          .attr("stroke-opacity", 0.5)
+          .attr("r", y);
+        
+        yTick.append("text")
+          .attr("x", -6)
+          .attr("y", function(d) { return -y(d); })
+          .attr("dy", "0.35em")
+          .attr("fill", "none")
+          .attr("stroke", "#fff")
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-width", 3)
+          .text(y.tickFormat(10, "s"));
+        
+        yTick.append("text")
+          .attr("x", -6)
+          .attr("y", function(d) { return -y(d); })
+          .attr("dy", "0.35em")
+          .text(y.tickFormat(10, "s"));
+        
+        yAxis.append("text")
+          .attr("x", -6)
+          .attr("y", function(d) { return -y(y.ticks(10).pop()); })
+          .attr("dy", "-1em")
+          .text("Units");
+        
+        var legend = g.append("g")
+        .selectAll("g")
+        .data(data.columns.slice(1).reverse())
+        .enter().append("g")
+          .attr("transform", function(d, i) { return "translate(-100," + (i - (data.columns.length - 1) / 2) * 20 + ")"; });
+        
+        legend.append("rect")
+          .attr("width", 18)
+          .attr("height", 18)
+          .attr("fill", z);
+        
+        legend.append("text")
+          .attr("x", 24)
+          .attr("y", 9)
+          .attr("dy", "0.35em")
+          .text(function(d) { return d; });
+    
+        
+        function weave(array, compare) {
+        var i = -1, j, n = array.sort(compare).length, weave = new Array(n);
+        while (++i < n) weave[i] = array[(j = i << 1) >= n ? (n - i << 1) - 1 : j];
+        while (--n >= 0) array[n] = weave[n];
+        }
+        
+        
 }));
