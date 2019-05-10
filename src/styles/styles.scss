@@ -4,18 +4,22 @@
 @import 'fonts';
 
 
-body{
-    h1{
-        font-size: 3em;
-        color: rgb(52, 43, 87);
-        font-family: $default-font;
-    }
-}
-svg{
-    path{
-        &:hover{
-            fill:rgba(104, 93, 93, 0.096);
-            stroke:rgb(3, 3, 3);
-        }
-    }
-}
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: auto;
+    position: relative;
+    width: 960px;
+  }
+  form {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  .node {
+    border: solid 1px white;
+    font: 10px sans-serif;
+    line-height: 12px;
+    overflow: hidden;
+    position: absolute;
+    text-indent: 2px;
+  }

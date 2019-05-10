@@ -5,9 +5,10 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin'
+import {VueLoaderPlugin} from 'vue-loader'
 
 export default {
-    entry: path.join(__dirname, 'src/index.js'),
+    entry: path.join(__dirname, 'src/app.js'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: '[name].bundle.js'
@@ -36,6 +37,10 @@ export default {
             }
             }
         ]
+        },
+        {
+          test: /\.vue$/,
+          use: ['vue-loader']
         },
         {
           test: /\.json$/,
@@ -71,8 +76,9 @@ export default {
             }
     },
     plugins: [
+       new VueLoaderPlugin(),
         new CopyPlugin([
-          { from: 'src/data.csv', to: '',flatten:true, },
+          { from: 'src/flare.json', to: '',flatten:true, },
         ]),
         new MiniCssExtractPlugin({
             filename: 'styles/[name].css',
