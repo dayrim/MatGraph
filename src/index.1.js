@@ -162,6 +162,7 @@ import axios from 'axios'
 // let ultimateData = []
 
 //   function getDomesticExtraction() {
+<<<<<<< HEAD
 //     return axios.get('/api/stat-ee/KK91')
 //   }
   
@@ -170,6 +171,16 @@ import axios from 'axios'
 //   }
 //   function getExports() {
 //     return axios.get('/api/stat-ee/KK957')
+=======
+//     return axios.get('/api/stat-ee/table/KK91')
+//   }
+  
+//   function getImports() {
+//     return axios.get('/api/stat-ee/table/KK956')
+//   }
+//   function getExports() {
+//     return axios.get('/api/stat-ee/table/KK957')
+>>>>>>> 83a8aa4be7594c581dd366b5396d51f1d91db375
 //   }
 
 //   function processData(response,domestic){
@@ -418,6 +429,7 @@ class Exports {
 let ultimateData = []
 
   function getDomesticExtraction() {
+<<<<<<< HEAD
     return axios.get('/api/stat-ee/KK91')
   }
   
@@ -426,6 +438,16 @@ let ultimateData = []
   }
   function getExports() {
     return axios.get('/api/stat-ee/KK957')
+=======
+    return axios.get('/api/stat-ee/table/KK91')
+  }
+  
+  function getImports() {
+    return axios.get('/api/stat-ee/table/KK956')
+  }
+  function getExports() {
+    return axios.get('/api/stat-ee/table/KK957')
+>>>>>>> 83a8aa4be7594c581dd366b5396d51f1d91db375
   }
 
   function processData(response,domestic){
@@ -548,11 +570,23 @@ let ultimateData = []
             }
         })
         console.log(ultimateData[0])
+<<<<<<< HEAD
         var svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height"),
         innerRadius = 120,
         outerRadius = height/2.6,
+=======
+        const width = 1200
+        const height = 1000
+
+        const svg = d3.select("svg")
+            .attr("width", width )
+            .attr("height", height )
+            
+        const innerRadius = 120
+        const outerRadius = height/2.6
+>>>>>>> 83a8aa4be7594c581dd366b5396d51f1d91db375
         g = svg.append("g").attr("transform", "translate(+"+width/2+","+height/2+")");
         
         var x = d3.scaleBand()
